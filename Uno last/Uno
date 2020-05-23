@@ -129,13 +129,10 @@ namespace Сards
             CardSet cards = new CardSet(52);
             int a = r.Next(cards.Cards.Count);
             int b = r.Next(cards.Cards.Count);
-            for (int i = 0; i < 7; i++)
-            {
-                Player1.Cards.Add(CommonDeck.Pull(a));
-                cards.Cards.RemoveAt(a);
-                Player2.Cards.Add(CommonDeck.Pull(r.Next(cards.Cards.Count)));
-                cards.Cards.RemoveAt(b);
-            }
+            Player1.Cards.Deal(7);
+            cards.Cards.RemoveRange(cards.Cards.Count-7, cards.Cards.Count);
+            Player2.Cards.Deal(7);
+            cards.Cards.RemoveRange(cards.Cards.Count - 7, cards.Cards.Count);
             DeckCard = CommonDeck.Pull();
             cards.Cards.RemoveAt(0);
             while (Player1.Cards.Cards.Count!=0&&Player2.Cards.Cards.Count!=0)
