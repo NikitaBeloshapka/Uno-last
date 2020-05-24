@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Сards
 {
@@ -14,6 +15,7 @@ namespace Сards
         public delegate void ShowInfo(string message);
         private ShowInfo ShowMessage;
         public Card DeckCard { get; set; }
+        public PictureBox pic { get; set; }
 
         public Uno(CardSet commonDeck, Player player1, Player player2)
         {
@@ -38,8 +40,7 @@ namespace Сards
                 {
                     if (card.Colour ==DeckCard.Colour||card.Kinds ==DeckCard.Kinds)
                     {
-                        DeckCard = card;
-                        player1.Cards.Cards.Remove(card);
+                        pic.Top += 20;
                     }
                     else
                     {
@@ -65,9 +66,7 @@ namespace Сards
                 {
                     if (card.Colour == DeckCard.Colour||card.Kinds == DeckCard.Kinds)
                     {
-                        DeckCard = card;
-                        player1.Cards.Cards.Remove(card);
-                        Move(player1,player2);
+                        pic.Top += 20;
                     }
                     else
                     {
@@ -94,9 +93,7 @@ namespace Сards
                 {
                     if (card.Colour == DeckCard.Colour || card.Kinds == DeckCard.Kinds)
                     {
-                        DeckCard = card;
-                        player1.Cards.Cards.Remove(card);
-                        player2.Cards.Add(CommonDeck.Pull());
+                        pic.Top += 20;
                     }
                     else
                     {
@@ -112,7 +109,7 @@ namespace Сards
                             }
                             else
                             {
-                                break;
+                                return;
                             }
                         }
                         
