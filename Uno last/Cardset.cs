@@ -66,6 +66,13 @@ namespace Сards
             return a;
         }
 
+        public Card Pull(Card card)
+        {
+            int ind = Cards.IndexOf(card);
+
+            return Pull(ind);
+        }
+
         public virtual void Show()
         {
             foreach (var item in Cards)
