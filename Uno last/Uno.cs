@@ -14,13 +14,13 @@ namespace Сards
         public List<Card> CardForMoving { get; set; }
 
         public Player activePlayer { get; set; }
+        public CardColour activeColor { get; set; }
         public bool Reversed { get; set; }
 
 
         public delegate void ShowInfo(string message);
         private ShowInfo ShowMessage;
         public Card DeckCard { get; set; }
-        public PictureBox pic { get; set; }
 
         public Action<Player> SelectPlayer { get; set; }
         public Action<List<Card>, Player> SelectCards { get; set; }
@@ -41,43 +41,38 @@ namespace Сards
         //Method NextPlayer (Player player)
         public Player NextPlayer(Player player)
         {
-            int i = 0;
-            for (i = 0; i <= Players.Count; i++)
+            if (!Reversed)
             {
-                if (Players[i]==player)
-                {
-                    if (i==Players.Count)
-                    {
-                        i = 0;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
+                int index = Players.IndexOf(player);
+                if (index == Players.Count - 1)
+                    return Players[0];
+                else
+                    return Players[index + 1];
             }
-            return Players[i++];
+            else
+            {
+                return PreviousPlayer(player);
+            }
         }
 
         // Method PreviousPlayer
         public Player PreviousPlayer(Player player)
         {
-            int i = 0;
-            for (i = 0; i <= Players.Count; i++)
+            for (int i = 0; i <= Players.Count; i++)
             {
                 if (Players[i] == player)
                 {
                     if (i == 0)
                     {
-                        i = Players.Count;
+                        return Players[Players.Count - 1];
                     }
                     else
                     {
-                        continue;
+                        return Players[i - 1];
                     }
                 }
             }
-            return Players[i--];
+            throw new Exception("We dont have this player");
         }
 
         // Method NextMover
@@ -91,44 +86,57 @@ namespace Сards
 
         public void Move(Card card)
         {
-            if (activePlayer.Cards.Cards.Count>0)
+            Move(card, card.Colour);
+        }
+
+        public void Move(Card card, CardColour colour)
+        {
+            if(activePlayer.Cards.Cards.IndexOf(card)==-1)
             {
-                GetCardsForMoving();
-                if (CardForMoving.Count>0)
-                {
-                    CardSet cardformoving = new CardSet(CardForMoving);
-                    if (cardformoving.Pull().Kinds==KindsOfCards.reverse)
-                    {
-                        DeckCard = cardformoving.Pull();
-                        if (Reversed)
-                        {
-                            Reversed = false;
-                            activePlayer = NextPlayer(activePlayer);
-                        }
-                        else
-                        {
-                            Reversed = true;
-                            activePlayer = NextPlayer(activePlayer);
-                        }
-                    }
-                    else if (cardformoving.Pull().Kinds == KindsOfCards.skip)
-                    {
-                        DeckCard = cardformoving.Pull();
-                        activePlayer = NextPlayer(NextPlayer(activePlayer));
-                    }
-                    else if (cardformoving.Pull().Kinds == KindsOfCards.add2)
-                    {
-                        DeckCard = cardformoving.Pull();
-                        NextPlayer(activePlayer).Cards.Add(CommonDeck.Deal(2));
-                        activePlayer = NextPlayer(activePlayer);
-                    }
-                    else
-                    {
-                        DeckCard = cardformoving.Pull();
-                        activePlayer = NextPlayer(activePlayer);
-                    }
-                }
+                Fail("ActivePlayer don't have this card");
+                return;
             }
+
+            if(!IsCorrect(DeckCard,card))
+            {
+                Fail("This card can't been put now");
+                return;
+            }
+
+            DeckCard = card;
+            activeColor = colour;
+
+            if (DeckCard.Kinds == KindsOfCards.reverse)
+            {
+                Reversed = !Reversed;
+            }
+                                    
+            if (DeckCard.Kinds == KindsOfCards.add2)
+            {
+                NextPlayer(activePlayer).Cards.Add(CommonDeck.Deal(2));
+            }
+
+            activePlayer = DeckCard.Kinds == KindsOfCards.skip ? 
+                NextPlayer(NextPlayer(activePlayer)) : 
+                NextPlayer(activePlayer);
+
+            Refresh();
+
+        }
+
+        private void Refresh()
+        {
+            foreach (var player in Players)
+            {
+                player.Cards.Show();
+            }
+            DeckCard.Show();
+
+        }
+
+        private void Fail(string message)
+        {
+            ShowMessage(message);
         }
 
         private List<Card> GetCardsForMoving()
@@ -136,18 +144,29 @@ namespace Сards
             CardForMoving = new List<Card>();
             foreach (Card card in activePlayer.Cards.Cards)
             {
-                if (card.Colour == DeckCard.Colour || card.Kinds == DeckCard.Kinds)
+                if (IsCorrect(DeckCard, card))
                     CardForMoving.Add(card);
             }
             return CardForMoving;
 
         }
 
+        private bool IsCorrect(Card toCard, Card card)
+        {
+            if (card.Colour == activeColor) return true;
+            
+            if (card.Kinds == toCard.Kinds) return true;
+
+            if (card.Colour == CardColour.black) return true;
+
+            return false;
+        }
+
         public void Start()
         {
             Random r = new Random();
             CommonDeck.Mix();
-            CardSet cards = new CardSet(52);
+            CardSet cards = new CardSet(52);//?
 
 
             foreach (var player in Players)
@@ -156,6 +175,7 @@ namespace Сards
             }
 
             DeckCard = CommonDeck.Pull();
+            activeColor = DeckCard.Colour;
             Reversed = false;
             activePlayer = Players[0];
             SelectPlayer(activePlayer);

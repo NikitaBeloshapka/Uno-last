@@ -20,6 +20,7 @@ namespace Сards
 
         public GraphicCardSet(Panel panel, int count) : this(panel)
         {
+            //исправить
             foreach (var colour in Enum.GetValues(typeof(CardColour)))
             {
                 foreach (var kind in Enum.GetValues(typeof(KindsOfCards)))

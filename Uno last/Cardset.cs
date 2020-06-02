@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Сards
 {
+    public enum CardSetType
+    {
+        Empty,
+        Full
+    }
     public class CardSet
     {
         public List<Card> Cards { get; set; }
@@ -23,8 +28,11 @@ namespace Сards
         public CardSet() : this(new List<Card>())
         { }
 
-        public CardSet(int count) : this()
+        public CardSet(CardSetType cardSetType) : this()
         {
+            if (cardSetType == CardSetType.Empty) return;
+
+            //подумать, как сформировать
             foreach (var colour in Enum.GetValues(typeof(CardColour)))
             {
                 foreach (var kind in Enum.GetValues(typeof(KindsOfCards)))
@@ -32,8 +40,7 @@ namespace Сards
                     Cards.Add(new Card((CardColour)colour, (KindsOfCards)kind));
                 }
             }
-            if (count < Count)
-                Cards.RemoveRange(0, Count - count);
+
         }
 
 

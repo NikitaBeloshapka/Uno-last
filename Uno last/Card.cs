@@ -36,9 +36,6 @@ public enum CardColour
 
 public enum KindsOfCards
 {
-    skip,
-    reverse,
-    add2,
     zero,
     one,
     two,
@@ -48,5 +45,8 @@ public enum KindsOfCards
     six,
     seven,
     eight,
-    nine
+    nine,
+    skip,
+    reverse,
+    add2
 }
