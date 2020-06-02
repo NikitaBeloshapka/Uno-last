@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +9,12 @@ namespace Сards
 {
     class GraphicUno : Uno
     {
-        public GraphicUno(CardSet commonDeck, Player player1, Player player2, Panel player1Deck, Panel player2Deck, Panel otherDeck) : base(commonDeck, player1, player2)
+        public GraphicUno(Panel[]playersDecks, Panel otherDeck,CardSet commonDeck,params Player[]players) : base(commonDeck, players)
         {
-            Player1.Cards = new GraphicCardSet(player1Deck);
-            Player2.Cards = new GraphicCardSet(player2Deck);
-
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Players[i].Cards = new GraphicCardSet(playersDecks[i]);
+            }
         }
     }
 }
