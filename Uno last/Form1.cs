@@ -19,7 +19,7 @@ namespace Сards
 
         private void button1_Click(object sender, EventArgs e)
         {
-            GraphicUno game = new GraphicUno( new GraphicCardSet(panel1, 52),new Player("Nikita"),new Player("Misha"),panel1,panel2,panel3);
+            GraphicUno game = new GraphicUno( Panel[]);
             game.RegisterHandler(Sho);
             game.Start();
         }
