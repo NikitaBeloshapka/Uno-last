@@ -1,17 +1,14 @@
+using Cards;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Сards
 {
     public partial class Form1 : Form
     {
+        Card activeCard;
+        Uno game;
+        Player mover;
         public Form1()
         {
             InitializeComponent();
@@ -19,13 +16,87 @@ namespace Сards
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Uno game = new Uno 
-            game.RegisterHandler(Sho);
-            game.Start();
+            game = new Uno(new CardSet commonDeck,new Player("Bob", new GraphicCardSet(pnlPlayer1)), new Player("Tom", new GraphicCardSet(pnlPlayer2)));
+
+            foreach (var card in game.CommonDeck.Cards)
+            {
+                PictureBox cardPictureBox = ((GraphicCard)card).Pb;
+                cardPictureBox.Click += CardPictureBox_Click;
+            }
+
+            game.ShowMessage = ShowMessage;
+            game.SelectPlayer = selectPlayer;
+
+            game.Deal();
         }
-        private void Sho(string message)
+
+        private void CardPictureBox_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(message);
+            PictureBox pictureBox = (PictureBox)sender;
+            SetActiveCard(pictureBox);
+        }
+
+        private void ShowMessage(string message)
+        {
+            label1.Text = message;
+        }
+
+        private void selectPlayer(Player activePlayer)
+        {
+            foreach (var player in game.Players)
+            {
+                if (player == activePlayer)
+                    foreach (var card in player.Cards.Cards)
+                    {
+                        GraphicCard graphicCard = (GraphicCard)card;
+                        graphicCard. = true;
+                    }
+                else
+                    foreach (var card in player.Cards.Cards)
+                    {
+                        GraphicCard graphicCard = (GraphicCard)card;
+                        graphicCard.Opened = false;
+                    }
+
+            }
+            game.Refresh();
+
+        }
+
+
+
+        private void SetActiveCard(PictureBox pictureBox)
+        {
+            foreach (var player in game.Players)
+            {
+                foreach (var card in player.Cards.Cards)
+                {
+                    if (((GraphicCard)card).Pb == pictureBox)
+                    {
+                        if (card == activeCard)
+                        {
+                            activeCard = null;
+                            pictureBox.Top -= 10;
+                            mover = null;
+                        }
+                        else
+                        {
+                            activeCard = card;
+                            pictureBox.Top += 10;
+                            mover = player;
+                        }
+
+
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void pnlTable_Click(object sender, EventArgs e)
+        {
+            if (activeCard != null && mover != null)
+                game.Move(mover, activeCard);
         }
     }
 }
