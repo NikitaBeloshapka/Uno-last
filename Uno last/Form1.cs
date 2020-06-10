@@ -16,7 +16,7 @@ namespace Сards
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            params Player players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), new Player("Tom", new GraphicCardSet(panel2)) };
+            List<Player> players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), new Player("Tom", new GraphicCardSet(panel2)) };
             game = new Uno(new CardSet commonDeck(), players);
 
             foreach (var card in game.CommonDeck.Cards)
