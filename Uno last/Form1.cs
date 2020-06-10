@@ -1,5 +1,6 @@
 using Cards;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Сards
@@ -13,10 +14,10 @@ namespace Сards
         {
             InitializeComponent();
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            game = new Uno(new CardSet commonDeck,new Player("Bob", new GraphicCardSet(pnlPlayer1)), new Player("Tom", new GraphicCardSet(pnlPlayer2)));
+            params Player players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), new Player("Tom", new GraphicCardSet(panel2)) };
+            game = new Uno(new CardSet commonDeck(), players);
 
             foreach (var card in game.CommonDeck.Cards)
             {
@@ -49,7 +50,7 @@ namespace Сards
                     foreach (var card in player.Cards.Cards)
                     {
                         GraphicCard graphicCard = (GraphicCard)card;
-                        graphicCard. = true;
+                        graphicCard.Opened = true;
                     }
                 else
                     foreach (var card in player.Cards.Cards)
@@ -96,7 +97,7 @@ namespace Сards
         private void pnlTable_Click(object sender, EventArgs e)
         {
             if (activeCard != null && mover != null)
-                game.Move(mover, activeCard);
+                game.Start();
         }
     }
 }
