@@ -37,12 +37,16 @@ namespace Сards
             {
                 foreach (var kind in Enum.GetValues(typeof(KindsOfCards)))
                 {
-                    Cards.Add(new Card((CardColour)colour, (KindsOfCards)kind));
+                    if((CardColour)colour!=CardColour.black) Cards.Add(GetCard((CardColour)colour, (KindsOfCards)kind));
                 }
             }
 
         }
 
+        public virtual Card GetCard(CardColour colour, KindsOfCards kind)
+        {
+            return new Card(colour, kind);
+        }
 
         public void Mix()
         {

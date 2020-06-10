@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Сards;
 
-namespace Cards
+namespace Сards
 {
     class GraphicCard : Card
     {
@@ -26,7 +25,7 @@ namespace Cards
         }
 
         private bool opened;
-        private readonly string imageShirtPath = Application.StartupPath + @"\images\shirt.jpg";
+        private readonly string imageShirtPath = Application.StartupPath + @"\images\shirt.png";
         private readonly string fileName;
 
         public GraphicCard(KindsOfCards kinds, CardColour colour, PictureBox pb, bool opened = true) : base(colour,kinds)
@@ -40,7 +39,7 @@ namespace Cards
 
         public GraphicCard(KindsOfCards kinds, CardColour colour) : this(kinds, colour, new PictureBox()) { }
 
-        public GraphicCard(CardColour colour, KindsOfCards kinds) : base(colour, kinds)
+        public GraphicCard(CardColour colour, KindsOfCards kinds) : this(kinds, colour)
         {
         }
 
@@ -51,7 +50,7 @@ namespace Cards
 
         public override string ToString()
         {
-            return String.Format($"{Kinds}s {Colour}");
+            return String.Format($"{Kinds} {Colour}");
         }
 
     }

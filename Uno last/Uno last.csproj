@@ -56,7 +56,6 @@
     </Compile>
     <Compile Include="GraphicCard.cs" />
     <Compile Include="GraphicCardSet.cs" />
-    <Compile Include="GraphicUno.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

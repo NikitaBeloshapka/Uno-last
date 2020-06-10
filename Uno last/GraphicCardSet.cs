@@ -13,25 +13,14 @@ namespace Сards
     class GraphicCardSet : CardSet
     {
         public Panel Panel { get; set; }
-        public GraphicCardSet(Panel panel)
+        public GraphicCardSet(Panel panel, CardSetType cardSetType = CardSetType.Empty) : base(cardSetType)
         {
             Panel = panel;
         }
-
-        public GraphicCardSet(Panel panel, int count) : this(panel)
+        public override Card GetCard(CardColour colour, KindsOfCards kind)
         {
-            //исправить
-            foreach (var colour in Enum.GetValues(typeof(CardColour)))
-            {
-                foreach (var kind in Enum.GetValues(typeof(KindsOfCards)))
-                {
-                    Cards.Add(new GraphicCard((CardColour)colour, (KindsOfCards)kind));
-                }
-            }
-            if (count < Count)
-                Cards.RemoveRange(0, Count - count);
+            return new GraphicCard(colour, kind);
         }
-
         public override void Show()
         {
             for (int i = 0; i < Cards.Count; i++)

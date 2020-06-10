@@ -1,4 +1,3 @@
-using Cards;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -17,7 +16,7 @@ namespace Сards
         private void button1_Click(object sender, EventArgs e)
         {
             List<Player> players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), new Player("Tom", new GraphicCardSet(panel2)) };
-            game = new Uno(new GraphicCardSet(panel3), players.ToArray());
+            game = new Uno(new GraphicCardSet(panel3,CardSetType.Full),new GraphicCardSet(pnlTable), players.ToArray());
 
             foreach (var card in game.CommonDeck.Cards)
             {
@@ -27,8 +26,14 @@ namespace Сards
 
             game.ShowMessage = ShowMessage;
             game.SelectPlayer = selectPlayer;
+            game.SelectCards = SelectCards;
 
             game.Start();
+        }
+
+        private void SelectCards(List<Card> cards, Player player)
+        {
+            //выделить карты
         }
 
         private void CardPictureBox_Click(object sender, EventArgs e)
@@ -96,8 +101,18 @@ namespace Сards
 
         private void pnlTable_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void pnlTable_MouseMove(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
             if (activeCard != null && mover != null)
-                game.Start();
+                game.Move(activeCard);
         }
     }
 }

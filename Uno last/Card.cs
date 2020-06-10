@@ -29,9 +29,10 @@ namespace Сards
 public enum CardColour
 {
     red,
-    black,
+    blue,
     green,
-    yellow
+    yellow,
+    black
 }
 
 public enum KindsOfCards

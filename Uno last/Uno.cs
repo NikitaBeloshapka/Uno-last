@@ -10,6 +10,7 @@ namespace Сards
     class Uno
     {
         public CardSet CommonDeck { get; set; }
+        public CardSet Table { get; set; }
         public List<Player> Players { get; set; }
         public List<Card> CardForMoving { get; set; }
 
@@ -23,9 +24,10 @@ namespace Сards
         public Action<string> ShowMessage { get; set; }
 
 
-        public Uno(CardSet commonDeck, params Player[] players)
+        public Uno(CardSet commonDeck, CardSet table, params Player[] players)
         {
             CommonDeck = commonDeck;
+            Table = table;
             Players = new List<Player>(players);
         }
 
@@ -110,18 +112,22 @@ namespace Сards
             activePlayer = DeckCard.Kinds == KindsOfCards.skip ? 
                 NextPlayer(NextPlayer(activePlayer)) : 
                 NextPlayer(activePlayer);
+            SelectPlayer(activePlayer);
 
             Refresh();
 
         }
 
-        private void Refresh()
+        public void Refresh()
         {
+
             foreach (var player in Players)
             {
                 player.Cards.Show();
             }
-            DeckCard.Show();
+            Table.Cards.Clear();
+            Table.Add(DeckCard);
+            Table.Show();
 
         }
 
@@ -155,10 +161,7 @@ namespace Сards
 
         public void Start()
         {
-            Random r = new Random();
             CommonDeck.Mix();
-            CardSet cards = new CardSet(CardSetType.Full);
-
 
             foreach (var player in Players)
             {
