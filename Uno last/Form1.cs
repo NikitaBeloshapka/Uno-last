@@ -17,7 +17,7 @@ namespace Сards
         private void button1_Click(object sender, EventArgs e)
         {
             List<Player> players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), new Player("Tom", new GraphicCardSet(panel2)) };
-            game = new Uno(new CardSet commonDeck(), players);
+            game = new Uno(new GraphicCardSet(panel3), players.ToArray());
 
             foreach (var card in game.CommonDeck.Cards)
             {
@@ -28,7 +28,7 @@ namespace Сards
             game.ShowMessage = ShowMessage;
             game.SelectPlayer = selectPlayer;
 
-            game.Deal();
+            game.Start();
         }
 
         private void CardPictureBox_Click(object sender, EventArgs e)

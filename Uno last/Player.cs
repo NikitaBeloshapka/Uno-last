@@ -10,10 +10,10 @@ namespace Сards
     {
         public string Name { get; set; }
         public CardSet Cards { get; set; }
-        public Player(string name)
+        public Player(string name, CardSet cards)
         {
             Name = name;
-
+            Cards = cards;
         }
     }
 }

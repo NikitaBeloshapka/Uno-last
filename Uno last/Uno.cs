@@ -16,14 +16,11 @@ namespace Сards
         public Player activePlayer { get; set; }
         public CardColour activeColor { get; set; }
         public bool Reversed { get; set; }
-
-
-        public delegate void ShowInfo(string message);
-        private ShowInfo ShowMessage;
         public Card DeckCard { get; set; }
 
         public Action<Player> SelectPlayer { get; set; }
         public Action<List<Card>, Player> SelectCards { get; set; }
+        public Action<string> ShowMessage { get; set; }
 
 
         public Uno(CardSet commonDeck, params Player[] players)
@@ -77,12 +74,6 @@ namespace Сards
 
         // Method NextMover
         // или след. или пред.
-
-        public void RegisterHandler(ShowInfo showInfo)
-        {
-            //gegree
-            ShowMessage = showInfo;
-        }
 
         public void Move(Card card)
         {
@@ -166,7 +157,7 @@ namespace Сards
         {
             Random r = new Random();
             CommonDeck.Mix();
-            CardSet cards = new CardSet(52);//?
+            CardSet cards = new CardSet(CardSetType.Full);
 
 
             foreach (var player in Players)
