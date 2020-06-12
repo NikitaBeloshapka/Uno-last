@@ -73,7 +73,10 @@ namespace Сards
             }
             throw new Exception("We dont have this player");
         }
-
+        public void TakeOneCard()
+        {
+            activePlayer.Cards.Add(CommonDeck.Pull());
+        }
         // Method NextMover
         // или след. или пред.
 
@@ -84,33 +87,34 @@ namespace Сards
 
         public void Move(Card card, CardColour colour)
         {
-            if(activePlayer.Cards.Cards.IndexOf(card)==-1)
+            if (activePlayer.Cards.Cards.IndexOf(card) == -1)
             {
                 Fail("ActivePlayer don't have this card");
                 return;
             }
 
-            if(!IsCorrect(DeckCard,card))
+            if (!IsCorrect(DeckCard, card))
             {
                 Fail("This card can't been put now");
                 return;
             }
 
             DeckCard = card;
+            activePlayer.Cards.Cards.Remove(card);
             activeColor = colour;
 
             if (DeckCard.Kinds == KindsOfCards.reverse)
             {
                 Reversed = !Reversed;
             }
-                                    
+
             if (DeckCard.Kinds == KindsOfCards.add2)
             {
                 NextPlayer(activePlayer).Cards.Add(CommonDeck.Deal(2));
             }
 
-            activePlayer = DeckCard.Kinds == KindsOfCards.skip ? 
-                NextPlayer(NextPlayer(activePlayer)) : 
+            activePlayer = DeckCard.Kinds == KindsOfCards.skip ?
+                NextPlayer(NextPlayer(activePlayer)) :
                 NextPlayer(activePlayer);
             SelectPlayer(activePlayer);
 
@@ -151,7 +155,7 @@ namespace Сards
         private bool IsCorrect(Card toCard, Card card)
         {
             if (card.Colour == activeColor) return true;
-            
+
             if (card.Kinds == toCard.Kinds) return true;
 
             if (card.Colour == CardColour.black) return true;
@@ -176,4 +180,4 @@ namespace Сards
             SelectCards(GetCardsForMoving(), activePlayer);
         }
     }
-} 
+}
