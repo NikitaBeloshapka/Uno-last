@@ -16,12 +16,14 @@ namespace Сards
         private void button1_Click(object sender, EventArgs e)
         {
             List<Player> players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), new Player("Tom", new GraphicCardSet(panel2)) };
-            game = new Uno(new GraphicCardSet(panel3,CardSetType.Full),new GraphicCardSet(pnlTable), players.ToArray());
+            game = new Uno(new GraphicCardSet(panel3, CardSetType.Full), new GraphicCardSet(pnlTable), players.ToArray());
 
             foreach (var card in game.CommonDeck.Cards)
             {
                 PictureBox cardPictureBox = ((GraphicCard)card).Pb;
+                PictureBox TablePictureBox = ((GraphicCard)card).Pb;
                 cardPictureBox.Click += CardPictureBox_Click;
+                TablePictureBox.Click += TablePictureBox_Click;
             }
 
             game.ShowMessage = ShowMessage;
@@ -40,6 +42,11 @@ namespace Сards
         {
             PictureBox pictureBox = (PictureBox)sender;
             SetActiveCard(pictureBox);
+        }
+        private void TablePictureBox_Click(object sender, EventArgs e)
+        {
+            if (activeCard != null && mover != null)
+                game.Move(activeCard);
         }
 
         private void ShowMessage(string message)
@@ -101,18 +108,19 @@ namespace Сards
 
         private void pnlTable_Click(object sender, EventArgs e)
         {
-
+               
         }
-
+         private void button2_Click_1(object sender, EventArgs e)
+        {
+            
+        }
         private void pnlTable_MouseMove(object sender, MouseEventArgs e)
         {
-            MessageBox.Show("");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void pnlTable_MouseMove_1(object sender, MouseEventArgs e)
         {
-            if (activeCard != null && mover != null)
-                game.Move(activeCard);
+
         }
     }
 }
