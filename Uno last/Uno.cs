@@ -22,6 +22,8 @@ namespace Сards
         public Action<Player> SelectPlayer { get; set; }
         public Action<List<Card>, Player> SelectCards { get; set; }
         public Action<string> ShowMessage { get; set; }
+        public Action<Player> PlayerWin { get; set; }
+        public bool giveMove { get; set; } = false;
 
 
         public Uno(CardSet commonDeck, CardSet table, params Player[] players)
@@ -75,7 +77,19 @@ namespace Сards
         }
         public void TakeOneCard()
         {
-            activePlayer.Cards.Add(CommonDeck.Pull());
+            if (!giveMove)
+            {
+                activePlayer.Cards.Add(CommonDeck.Pull());
+                giveMove = true;
+                Refresh();
+            }
+            else
+            {
+                giveMove = false;
+                activePlayer = NextPlayer(activePlayer);
+                SelectPlayer(activePlayer);
+            }
+
         }
         // Method NextMover
         // или след. или пред.
@@ -113,6 +127,7 @@ namespace Сards
                 NextPlayer(activePlayer).Cards.Add(CommonDeck.Deal(2));
             }
 
+            giveMove = false;
             activePlayer = DeckCard.Kinds == KindsOfCards.skip ?
                 NextPlayer(NextPlayer(activePlayer)) :
                 NextPlayer(activePlayer);
@@ -132,7 +147,15 @@ namespace Сards
             Table.Cards.Clear();
             Table.Add(DeckCard);
             Table.Show();
+            CheckWin();
+        }
 
+        private void CheckWin()
+        {
+            foreach (Player player in Players)
+            {
+                if (player.Cards.Cards.Count == 0) PlayerWin(player);
+            };
         }
 
         private void Fail(string message)

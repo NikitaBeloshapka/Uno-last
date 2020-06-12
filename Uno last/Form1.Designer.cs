@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.pnlTable = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // button1
@@ -50,10 +51,10 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(235, 336);
+            this.panel1.Location = new System.Drawing.Point(235, 389);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(502, 219);
+            this.panel1.Size = new System.Drawing.Size(502, 166);
             this.panel1.TabIndex = 1;
             // 
             // panel2
@@ -61,12 +62,12 @@
             this.panel2.Location = new System.Drawing.Point(235, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(491, 222);
+            this.panel2.Size = new System.Drawing.Size(491, 146);
             this.panel2.TabIndex = 2;
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(776, 154);
+            this.panel3.Location = new System.Drawing.Point(530, 204);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(196, 107);
@@ -83,9 +84,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(13, 123);
+            this.button2.Location = new System.Drawing.Point(12, 115);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(125, 61);
             this.button2.TabIndex = 5;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
@@ -93,7 +94,7 @@
             // 
             // pnlTable
             // 
-            this.pnlTable.Location = new System.Drawing.Point(776, 291);
+            this.pnlTable.Location = new System.Drawing.Point(303, 204);
             this.pnlTable.Margin = new System.Windows.Forms.Padding(4);
             this.pnlTable.Name = "pnlTable";
             this.pnlTable.Size = new System.Drawing.Size(196, 107);
@@ -101,11 +102,20 @@
             this.pnlTable.Click += new System.EventHandler(this.pnlTable_Click);
             this.pnlTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlTable_MouseMove);
             // 
+            // panel4
+            // 
+            this.panel4.Location = new System.Drawing.Point(758, 196);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(502, 166);
+            this.panel4.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(1323, 554);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.pnlTable);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
@@ -130,6 +140,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel pnlTable;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 

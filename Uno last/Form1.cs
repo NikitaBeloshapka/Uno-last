@@ -15,7 +15,9 @@ namespace Сards
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            List<Player> players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), new Player("Tom", new GraphicCardSet(panel2)) };
+            List<Player> players = new List<Player> { new Player("Bob", new GraphicCardSet(panel1)), 
+                new Player("Tom", new GraphicCardSet(panel2)),
+                new Player("Jack", new GraphicCardSet(panel4))};
             game = new Uno(new GraphicCardSet(panel3, CardSetType.Full), new GraphicCardSet(pnlTable), players.ToArray());
 
             foreach (var card in game.CommonDeck.Cards)
@@ -29,8 +31,15 @@ namespace Сards
             game.ShowMessage = ShowMessage;
             game.SelectPlayer = selectPlayer;
             game.SelectCards = SelectCards;
+            game.PlayerWin = Win;
 
             game.Start();
+        }
+
+        private void Win(Player winner)
+        {
+            MessageBox.Show($"Player {winner.Name} has won");
+            this.Close();
         }
 
         private void SelectCards(List<Card> cards, Player player)
@@ -121,6 +130,12 @@ namespace Сards
         private void pnlTable_MouseMove_1(object sender, MouseEventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            game.TakeOneCard();
+            button2.Text = game.giveMove ? "Give move" : "Take card";
         }
     }
 }

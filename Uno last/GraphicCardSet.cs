@@ -25,12 +25,13 @@ namespace Сards
         {
             for (int i = 0; i < Cards.Count; i++)
             {
+                int dy = 70;
                 GraphicCard graphicCard = (GraphicCard)Cards[i];
                 PictureBox pb = graphicCard.Pb;
                 Panel.Controls.Add(pb);
                 pb.BringToFront();
-                pb.Location = new Point(i * 50, 0);
-                pb.Size = new Size(Panel.Width/Cards.Count, Panel.Height);
+                pb.Location = new Point(1.0 * (Panel.Width - pb.Width) / Cards.Count < dy ? i * (Panel.Width - pb.Width) / Cards.Count : i * dy, 0); ;
+                pb.Size = new Size(Panel.Height * pb.Image.Width / pb.Image.Height, Panel.Height);
                 pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
                 pb.TabIndex = i;
                 pb.TabStop = false;
